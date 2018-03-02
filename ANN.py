@@ -92,7 +92,7 @@ class ExtremeANN(object):
 			self.w1 = self.w1 - Apprentissage*dErreurdw1
 			self.w2 = self.w2 - Apprentissage*dErreurdw2
 			
-	
+	'''
 	# Version avec enregistrement de la propagation (non optimisé!!):
 	def propagation_e(self, X,e):
 		self.z1 = np.dot(X, self.w1)
@@ -128,3 +128,4 @@ class ExtremeANN(object):
 			print(i+1 , ':' , Erreur)
 			self.w1 = self.w1 - Apprentissage*dErreurdw1
 			self.w2 = self.w2 - Apprentissage*dErreurdw2
+	'''

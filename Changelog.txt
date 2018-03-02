@@ -1,9 +1,5 @@
--Première tentative d'implémentation d'animation des graphiques
--Ajout de fonctions de gestion de données (csv) (rendues obsolètes):
-	.Ajout de extract_csv (ancienne fonction renommée en extractdict_csv)
-	.Ajout de colonne() (Transposition de la fonction separate_dict pour les listes)
-- Création du fichier GRAPH.py:
-	.Gestion de matplotlib.pyplot orientée objet (class Graphique)
-	.Simplification de la création des graphiques
--Utilisation de np.loadtxt pour extraire les données et fin de l'utilisation de fonctions persos
--Simplification du code Kraken
+GRAPH.PY
+	- CrÃ©ation fonction animation (inutile pour KRAKEN)
+	- CrÃ©ation fonction raffraichissement
+KRAKEN.PY
+	- PremiÃ¨re animation fonctionnelle des courbes prÃ©dites

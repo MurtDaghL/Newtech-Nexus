@@ -1,10 +1,10 @@
 # Création de la fenêtre tkinter:
 fenetre = tk.Tk()
-fenetre.title("Newtech Nexus v0.0.0_1d PRE ALPHA")
+fenetre.title("Newtech Nexus v0.0.0_1e PRE ALPHA")
 	# Définition éléments:
 	
 		# Graphiques:
-Frame_main =tk.Frame(fenetre,bg='white')
+Frame_main =tk.Frame(fenetre)
 canv_open = FigureCanvasTkAgg(Openg.fenetre,master=Frame_main)._tkcanvas.grid(row=1,column=0)
 Openg.fenetre.canvas.draw()
 canv_close = FigureCanvasTkAgg(Closeg.fenetre,master=Frame_main)._tkcanvas.grid(row=1,column=1)
