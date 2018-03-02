@@ -1,0 +1,2 @@
+- Première version fonctionnelle d'une interface graphique une fois la prédiction finie
+- Implémentation d'un système d'historique
