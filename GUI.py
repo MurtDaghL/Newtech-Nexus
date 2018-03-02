@@ -1,7 +1,7 @@
-# Création de la fenêtre tkinter:
+# Crï¿½ation de la fenï¿½tre tkinter:
 fenetre = tk.Tk()
 fenetre.title("Newtech Nexus v0.0.0_2c PRE ALPHA")
-	# Définition éléments:
+	# Dï¿½finition ï¿½lï¿½ments:
 Frame_main =tk.Frame(fenetre)
 		# Graphiques:
 canv_open = FigureCanvasTkAgg(Openg.fenetre,master=Frame_main)._tkcanvas.grid(row=1,column=0)
@@ -20,7 +20,7 @@ def afficher(Texte):
 	Texte_screen['state'] = 'disabled'
 	Texte_screen.see("end")
 Ecran.grid(row=1,column=2)
-		# Entrée utilisateur:
+		# Entrï¿½e utilisateur:
 def _entry(entry):
 	data = entry.get()
 	return data
@@ -38,7 +38,7 @@ def _valider():
 		valider['state'] = 'disabled'
 		animation['state'] = 'disabled'
 		intervalle['state'] = 'disabled'
-		with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2c PRE ALPHA\\RESEAU.py","r") as script:
+		with open("D:\\Domanis\\GitHub\\Newtech-Nexus\\RESEAU.py","r") as script:
 			exec(script.read())
 def _quit():
 	fenetre.quit()
@@ -54,7 +54,7 @@ Frame_input = tk.Frame(Frame_main,borderwidth=5,relief='sunken',width=60)
 Neurones = tk.Entry(Frame_input, textvariable = 'Neurones',justify='center')
 Essais = tk.Entry(Frame_input, textvariable = 'Essais',justify='center')
 Taux = tk.Entry(Frame_input, textvariable = 'Taux',justify='center')
-T1 = tk.Label(Frame_input, text="Neurones de la couche intermédiaire:",).grid(row=0,column=0)
+T1 = tk.Label(Frame_input, text="Neurones de la couche intermÃ©diaire:",).grid(row=0,column=0)
 T2 = tk.Label(Frame_input, text="Nombre d'essais:").grid(row=1,column=0)
 T3 = tk.Label(Frame_input, text="Taux d'apprentissage:",).grid(row=2,column=0)
 valider = tk.Button(Frame_input, text = "Valider", command = _valider, width=15)
@@ -65,7 +65,7 @@ animation = tk.Checkbutton(Frame_anim,text='Animation?',variable=False,command=_
 T4 = tk.Label(Frame_anim, text="Intervalle de rafraichissement:").pack()
 intervalle = tk.Entry(Frame_anim, textvariable = 1000,justify='center',state='disabled')
 
-	# Affichage éléments:
+	# Affichage ï¿½lï¿½ments:
 Frame_anim.grid(row=0,column=1)
 animation.pack()
 intervalle.pack()

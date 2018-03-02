@@ -17,6 +17,7 @@ def MMdenorm(data,min,max):
 
 class Neural_Network(object):
 #Définition des fonctions du réseau
+	def __init__(self):
 		self.Agregation = np.dot #Produit matriciel
 		self.Activation = self.sigmoide #Sigmoïde
 		self.Erreur = 'Quadratique'
