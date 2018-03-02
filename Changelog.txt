@@ -1,1 +1,4 @@
--Première version n'utilisant plus le terminal mais uniquement tkinter
+- Gestion de l'animation dans le GUI
+- Ajout de fonctions pour vérifier les gradients numériquement (détection d'erreur d'apprentissage)
+- Création d'un système d'héritage (class Neural_Network)
+	

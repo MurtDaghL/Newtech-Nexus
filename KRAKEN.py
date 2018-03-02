@@ -1,4 +1,4 @@
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2a PRE ALPHA\\ANN.py","r") as script:
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\ANN.py","r") as script:
 		exec(script.read())
 import matplotlib, csv
 matplotlib.use("TkAgg")
@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\PYTHON\\Datas\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
 Open,High,Low,Close,Volume = Open[::-1],High[::-1],Low[::-1],Close[::-1],Volume[::-1]
 # Création des graphiques matplotlib:
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2a PRE ALPHA\\GRAPH.py","r") as script:
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\GRAPH.py","r") as script:
 	exec(script.read())
 Openp = []
 Highp = []
@@ -31,11 +31,11 @@ Volumeg.courbe(x=range(len(Volumep)),y=Volumep,legende='Valeur prédite')
 # Normalisation et regroupement des données:
 Datas_Norm = []
 for i in range(len(Open)):
-	Datas_Norm.append([norm(Open[i],min(Open),max(Open))
-	,norm(High[i],min(High),max(High))
-	,norm(Low[i],min(Low),max(Low))
-	,norm(Close[i],min(Close),max(Close))
-	,norm(Volume[i],min(Volume),max(Volume))])
+	Datas_Norm.append([MMnorm(Open[i],min(Open),max(Open))
+	,MMnorm(High[i],min(High),max(High))
+	,MMnorm(Low[i],min(Low),max(Low))
+	,MMnorm(Close[i],min(Close),max(Close))
+	,MMnorm(Volume[i],min(Volume),max(Volume))])
 # Suppressions de données pour l'entrainement:
 Attendu = Datas_Norm
 for i in range(20):
@@ -44,7 +44,7 @@ Input = Attendu
 del Input[len(Input)-1]
 
 # Affichage de la fenêtre tkinter
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2a PRE ALPHA\\GUI.py","r") as script:
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\GUI.py","r") as script:
 		exec(script.read())
 
 # Affiche performance optimale:

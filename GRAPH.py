@@ -34,7 +34,7 @@ class graphique():
 			del self.axes.lines[1]
 			self.axes.plot(x,y,label=self.legende2,color='r')
 		plt.title(self.titre)
-		plt.legend()
+		# plt.legend()
 	def anim(self,i):
 		anim = animation.FuncAnimation(self.fenetre,self.refresh,interval=i,blit=True)
 		return anim
