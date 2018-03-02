@@ -1,7 +1,7 @@
-- Simplification du programme:
-	.Définition d'une fonction d'extraction des données
-	.Définition d'une fonction de séparation des données
-	.Définition d'une fonction d'écriture dans l'écran
-	
-- Aménagement de l'interface graphique
-- Activation du bouton Valider
+-Simplification code:
+	.Regroupement (quand c'est possible) de la création et du placement des widgets
+	.Code de l'interface dans un fichier à part
+	. Fonctions de gestion de données dans ANN.py
+	.Simplification de Kraken.py
+-Création d'une version du réseau neuronal avec enregistrement de la propagation
+-Passage à l'extension .py
