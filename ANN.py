@@ -1,5 +1,3 @@
-
-
 # Définition fonction de normalisation:
 def norm(data,min,max):
 	data = float(data)
@@ -13,8 +11,9 @@ def denorm(data,min,max):
 	max = float(max)
 	return data*(max-min)+min
 
-# Définition fonction de gestions des données:
-def extract_csv(chemin):
+# Définition fonction de gestions des données (obsolète)
+"""
+def extractdict_csv(chemin):
 	import csv
 	Datas_Dict = []
 	with open(chemin, 'r') as fichier:
@@ -22,17 +21,26 @@ def extract_csv(chemin):
 		for ligne in Texte:
 			Datas_Dict.append(ligne)
 	return Datas_Dict
-	
+def extract_csv(chemin, delimiteur=','):
+	import csv
+	Datas = []
+	with open(chemin, 'r') as fichier:
+		Texte = csv.reader(fichier,delimiter=delimiteur,)
+		for ligne in Texte:
+			if ligne != []:
+				Datas.append(ligne)
+	return Datas
+def colonne(Datas,num_col):
+	Colonne = []
+	for ligne in Datas:
+		Colonne.append(ligne[num_col])
+	return Colonne
 def separate_dict(Dict, Data):
 	Liste = []
 	for ligne in Dict:
 		Liste.append(float(ligne[Data]))
 	return Liste
-
-
-
-
-
+"""
 
 # Définition de la classe réseau neuronal à 3 couches:
 import numpy as np
@@ -45,14 +53,12 @@ class ExtremeANN(object):
 		# Définition des synapses
 		self.w1 = np.random.randn(self.TailleInputLayer,self.TailleHiddenLayer)
 		self.w2 = np.random.randn(self.TailleHiddenLayer, self.TailleOutputLayer)
-		
-		
+	
 	def sigmoide(self,x,deriv=False):
 		# Définition fonction d'activation
 		if deriv == True:
 			return np.exp(-x)/((1+np.exp(-x))**2)
 		return 1/(1+np.exp(-x))
-	
 	
 	# Version sans enregistrement:
 	def propagation(self, X):
@@ -71,7 +77,7 @@ class ExtremeANN(object):
 			dErreurdW2 = np.dot(self.X1.T, delta3)
         
 			delta2 = np.dot(delta3, self.w2.T)*self.sigmoide(self.z1, deriv=True)
-			dErreurdW1 = np.dot(Input.T, delta2)  
+			dErreurdW1 = np.dot(np.array(Input).T, delta2)  
         
 			return dErreurdW1, dErreurdW2
 			
@@ -86,13 +92,14 @@ class ExtremeANN(object):
 			self.w1 = self.w1 - Apprentissage*dErreurdw1
 			self.w2 = self.w2 - Apprentissage*dErreurdw2
 			
-	# Version avec enregistrement (non optimisé!!):
+	
+	# Version avec enregistrement de la propagation (non optimisé!!):
 	def propagation_e(self, X,e):
-		# Définition de la méthode de propagation:
 		self.z1 = np.dot(X, self.w1)
 		self.X1 = self.sigmoide(self.z1)
 		self.z2 = np.dot(self.X1, self.w2)
 		self.X2 = self.sigmoide(self.z2)
+		
 		with open(e,"w") as e:
 			Ecriture= csv.writer(e)
 			for ligne in range(len(self.X2)):
@@ -100,7 +107,6 @@ class ExtremeANN(object):
 		return self.X2
 		
 	def quadratique_e(self, Input , Attendu,e, deriv=False):
-		# Définition fonction de coût (taux d'erreur)
 		self.Sortie = self.propagation_e(Input,e)
 		if deriv == True:
 			

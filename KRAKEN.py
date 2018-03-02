@@ -1,26 +1,24 @@
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1c PRE ALPHA\\ANN.py","r") as script:
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1d PRE ALPHA\\ANN.py","r") as script:
 		exec(script.read())
 import matplotlib, csv
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt, tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+import matplotlib.animation as animation
 
-# Extraction et séparation des données:
-Datas_Dict = extract_csv('D:\\Domanis\\PYTHON\\Datas\\aapl.csv')
-Datas_Dict = Datas_Dict[::-1]
-Open = separate_dict(Datas_Dict,'Open')
-High = separate_dict(Datas_Dict,'High')
-Low = separate_dict(Datas_Dict,'Low')
-Close = separate_dict(Datas_Dict,'Close')
-Volume = separate_dict(Datas_Dict,'Volume')
+# Extraction et inversion des données:
+Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\PYTHON\\Datas\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
+Open,High,Low,Close,Volume = Open[::-1],High[::-1],Low[::-1],Close[::-1],Volume[::-1]
 
-# Définition des données dans une matrice et normalisation:
-Datas = []
+# Normalisation et regroupement des données:
 Datas_Norm = []
-for i in range(len(Datas_Dict)):
-	Datas.append([Open[i],High[i],Low[i],Close[i],Volume[i]])
-	Datas_Norm.append([norm(Open[i],min(Open),max(Open)),norm(High[i],min(High),max(High)),norm(Low[i],min(Low),max(Low)),norm(Close[i],min(Close),max(Close)),norm(Volume[i],min(Volume),max(Volume))])
+for i in range(len(Open)):
+	Datas_Norm.append([norm(Open[i],min(Open),max(Open))
+	,norm(High[i],min(High),max(High))
+	,norm(Low[i],min(Low),max(Low))
+	,norm(Close[i],min(Close),max(Close))
+	,norm(Volume[i],min(Volume),max(Volume))])
 
 # Suppressions de données pour l'entrainement:
 Attendu = Datas_Norm
@@ -29,19 +27,9 @@ for i in range(20):
 Input = Attendu
 del Input[len(Input)-1]
 
-Attendu = np.array(Attendu)
-Input = np.array(Input)
-
-# Extraction liste Historique:
-Perf_Dict = extract_csv("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\Historique.csv")
-
-N = separate_dict(Perf_Dict, 'Neurones')
-E = separate_dict(Perf_Dict, 'Essais')
-T = separate_dict(Perf_Dict, 'Taux')
-Err_moy = separate_dict(Perf_Dict, 'Moyenne')
-	
 # Affiche performance optimale:
-index = Err_moy.index(min(Err_moy))
+N,E,T,Err_moy = np.loadtxt("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\Historique.csv", delimiter = ',', skiprows=1 , usecols=(0,1,2,4),unpack=True)
+index = list(Err_moy).index(min(Err_moy))
 print('D\'après l\'historique, voici les paramètres optimaux:')
 print('Nombre de neurones: ',N[index])
 print('Nombre d\'essais: ',E[index])
@@ -62,12 +50,9 @@ input('\nDébut de l\'apprentissage:')
 
 # Définition réseau et apprentissage:
 PredictApple = ExtremeANN(5,N,5)
-# PredictApple.apprentissage_e(E,T,Input,Attendu,'D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1c PRE ALPHA\\propagation.csv')
 PredictApple.apprentissage(E,T,Input,Attendu)
 print('\n \n \n \n \n')
 # Prédiction des données supprimées:
-# PredictApple.propagation_e(Input,'D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1c PRE ALPHA\\propagation.csv')
-PredictApple.propagation(Input)
 z = list(PredictApple.propagation(Input))
 for i in range(21):
 	z.insert(len(z)-1,PredictApple.propagation(z[len(z)-1]))
@@ -96,40 +81,22 @@ with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\Historique.csv","a") as Historiqu
 	Ecriture= csv.writer(Historique)
 	Ecriture.writerow([N,E,T,Erreur_str,Moy])
 
-	
 # Création des graphiques matplotlib:
-Openg = plt.figure(figsize=(6, 4), dpi=100)
-plt.plot(range(len(Openp)),Openp, label='Valeur prédite')
-plt.plot(range(len(Open)),Open, label ='Valeur réelle')
-plt.title('Open')
-plt.legend()
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1d PRE ALPHA\\GRAPH.py","r") as script:
+		exec(script.read())
+	
+Openg = graphique(titre='Open',x=range(len(Openp)),y=Openp,label='Valeur prédite')
+Openg.courbe(range(len(Open)),Open,'Valeur réelle')
+Highg = graphique(titre='High',x=range(len(Highp)),y=Highp,label='Valeur prédite')
+Openg.courbe(x=range(len(High)),y=High,label='Valeur réelle')
+Lowg = graphique(titre='Low',x=range(len(Lowp)),y=Lowp,label='Valeur prédite')
+Openg.courbe(x=range(len(Low)),y=Low,label='Valeur réelle')
+Closeg = graphique(titre='Close',x=range(len(Closep)),y=Closep,label='Valeur prédite')
+Openg.courbe(x=range(len(Close)),y=Close,label='Valeur réelle')
+Volumeg = graphique(titre='Volume',x=range(len(Volumep)),y=Volumep,label='Valeur prédite')
+Openg.courbe(x=range(len(Volume)),y=Volume,label='Valeur réelle')
 
-Highg = plt.figure(figsize=(6, 4), dpi=100)
-plt.plot(range(len(Highp)),Highp, label='Valeur prédite')
-plt.plot(range(len(High)),High, label ='Valeur réelle')
-plt.title('High')
-plt.legend()
-
-Lowg = plt.figure(figsize=(6, 4), dpi=100)
-plt.plot(range(len(Lowp)),Lowp, label='Valeur prédite')
-plt.plot(range(len(Low)),Low, label ='Valeur réelle')
-plt.title('Low')
-plt.legend()
-
-Closeg = plt.figure(figsize=(6, 4), dpi=100)
-plt.plot(range(len(Closep)),Closep, label='Valeur prédite')
-plt.plot(range(len(Close)),Close, label ='Valeur réelle')
-plt.title('Close')
-plt.legend()
-
-Volumeg = plt.figure(figsize=(6, 4), dpi=100)
-plt.plot(range(len(Volumep)),Volumep, label='Valeur prédite')
-plt.plot(range(len(Volume)),Volume, label ='Valeur réelle')
-plt.title('Volume')
-plt.legend()
-
-	# Appel de l'interface:
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1c PRE ALPHA\\GUI.py","r") as script:
-	exec(script.read())
 print('Entraînement terminé, afichage des données prédites:')
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_1d PRE ALPHA\\GUI.py","r") as script:
+		exec(script.read())
 tk.mainloop()

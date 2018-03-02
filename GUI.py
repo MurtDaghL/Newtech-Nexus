@@ -1,20 +1,20 @@
 # Création de la fenêtre tkinter:
 fenetre = tk.Tk()
-fenetre.title("Newtech Nexus v0.0.0_1c PRE ALPHA")
+fenetre.title("Newtech Nexus v0.0.0_1d PRE ALPHA")
 	# Définition éléments:
 	
 		# Graphiques:
 Frame_main =tk.Frame(fenetre,bg='white')
-canv_open = FigureCanvasTkAgg(Openg,master=Frame_main)._tkcanvas.grid(row=1,column=0)
-Openg.canvas.draw()
-canv_close = FigureCanvasTkAgg(Closeg,master=Frame_main)._tkcanvas.grid(row=1,column=1)
-Closeg.canvas.draw()
-canv_high = FigureCanvasTkAgg(Highg,master=Frame_main)._tkcanvas.grid(row=2,column=0)
-Highg.canvas.draw()
-canv_low = FigureCanvasTkAgg(Lowg,master=Frame_main)._tkcanvas.grid(row=2,column=1)
-Lowg.canvas.draw()
-canv_volume = FigureCanvasTkAgg(Volumeg,master=Frame_main)._tkcanvas.grid(row=2,column=2)
-Volumeg.canvas.draw()
+canv_open = FigureCanvasTkAgg(Openg.fenetre,master=Frame_main)._tkcanvas.grid(row=1,column=0)
+Openg.fenetre.canvas.draw()
+canv_close = FigureCanvasTkAgg(Closeg.fenetre,master=Frame_main)._tkcanvas.grid(row=1,column=1)
+Closeg.fenetre.canvas.draw()
+canv_high = FigureCanvasTkAgg(Highg.fenetre,master=Frame_main)._tkcanvas.grid(row=2,column=0)
+Highg.fenetre.canvas.draw()
+canv_low = FigureCanvasTkAgg(Lowg.fenetre,master=Frame_main)._tkcanvas.grid(row=2,column=1)
+Lowg.fenetre.canvas.draw()
+canv_volume = FigureCanvasTkAgg(Volumeg.fenetre,master=Frame_main)._tkcanvas.grid(row=2,column=2)
+Volumeg.fenetre.canvas.draw()
 		
 		# Ecran:
 Ecran = tk.LabelFrame(Frame_main,width=580,height=380, bg ='green',bd=10,relief='sunken',text='Terminal',)
