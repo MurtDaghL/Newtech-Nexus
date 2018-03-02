@@ -1,5 +1,4 @@
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\ANN.py","r") as script:
-		exec(script.read())
+from ANN import *
 import matplotlib, csv
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt, tkinter as tk
@@ -10,8 +9,7 @@ from matplotlib.figure import Figure
 Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\PYTHON\\Datas\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
 Open,High,Low,Close,Volume = Open[::-1],High[::-1],Low[::-1],Close[::-1],Volume[::-1]
 # Création des graphiques matplotlib:
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\GRAPH.py","r") as script:
-	exec(script.read())
+from GRAPH import *
 Openp = []
 Highp = []
 Lowp = []
@@ -44,7 +42,7 @@ Input = Attendu
 del Input[len(Input)-1]
 
 # Affichage de la fenêtre tkinter
-with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\GUI.py","r") as script:
+with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2c PRE ALPHA\\GUI.py","r") as script:
 		exec(script.read())
 
 # Affiche performance optimale:

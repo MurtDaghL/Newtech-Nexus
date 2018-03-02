@@ -1,4 +1,6 @@
-- Gestion de l'animation dans le GUI
-- Ajout de fonctions pour vérifier les gradients numériquement (détection d'erreur d'apprentissage)
-- Création d'un système d'héritage (class Neural_Network)
-	
+- ANN.py et GRAPH.py désormais considérés comme des modules (import)
+A faire:
+	- Optimiser l'animation (blitting, conso de ram,...)
+	- Régler le bug de la fenêtre qui s'ouvre
+	- Régler le bug de la fenêtre qui freeze quand l'animation est désactivée
+	- Implémenter le Numerical Gradient Check dans l'apprentissage

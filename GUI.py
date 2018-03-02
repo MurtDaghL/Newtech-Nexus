@@ -1,6 +1,6 @@
 # Création de la fenêtre tkinter:
 fenetre = tk.Tk()
-fenetre.title("Newtech Nexus v0.0.0_2b PRE ALPHA")
+fenetre.title("Newtech Nexus v0.0.0_2c PRE ALPHA")
 	# Définition éléments:
 Frame_main =tk.Frame(fenetre)
 		# Graphiques:
@@ -38,7 +38,7 @@ def _valider():
 		valider['state'] = 'disabled'
 		animation['state'] = 'disabled'
 		intervalle['state'] = 'disabled'
-		with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2b PRE ALPHA\\RESEAU.py","r") as script:
+		with open("D:\\Domanis\\PYTHON\\NEWTECH_NEXUS\\0.0.0_2c PRE ALPHA\\RESEAU.py","r") as script:
 			exec(script.read())
 def _quit():
 	fenetre.quit()
