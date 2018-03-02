@@ -1,5 +1,1 @@
-GRAPH.PY
-	- Création fonction animation (inutile pour KRAKEN)
-	- Création fonction raffraichissement
-KRAKEN.PY
-	- Première animation fonctionnelle des courbes prédites
+-Première version n'utilisant plus le terminal mais uniquement tkinter

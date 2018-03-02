@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import style
+import matplotlib.axis as ax
 style.use('fivethirtyeight')
 # Classe graphique à 2 courbes max (sans bug):
 class graphique():
@@ -8,7 +9,7 @@ class graphique():
 		self.titre = titre
 		self.x1 = x
 		self.y1 = y
-		self.fenetre = plt.figure(figsize=(6, 4), dpi=100)
+		self.fenetre = plt.figure(figsize=(6, 4), dpi=100,)
 		self.axes = self.fenetre.add_subplot(1,1,1)
 		self.legende = legende
 		if x and y != 'lel':
