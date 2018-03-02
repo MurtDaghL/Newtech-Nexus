@@ -1,2 +1,7 @@
-- Première version fonctionnelle d'une interface graphique une fois la prédiction finie
-- Implémentation d'un système d'historique
+- Simplification du programme:
+	.Définition d'une fonction d'extraction des données
+	.Définition d'une fonction de séparation des données
+	.Définition d'une fonction d'écriture dans l'écran
+	
+- Aménagement de l'interface graphique
+- Activation du bouton Valider
