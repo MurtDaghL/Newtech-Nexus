@@ -35,7 +35,7 @@ fin = time()
 Datas = np.array(Datas)
 print("EXTRACTION ET NORMALISATION TERMINEE, durée: {temps}\nDimensions du tenseur de données: {dim} ".format(temps=fin-debut,dim=Datas.shape))
 
-	# Séparation des données d'entraînement et de test:
+	# Séparation des données d'entraînement et de test (obsolète puisque directement implémentable dans le réseau):
 ratio = 1
 split = int(ratio*len(Datas))
 trainX = Datas[:split-1] #Entrée donnée au réseau, correspond à une séquence de 5 jours
@@ -49,32 +49,34 @@ testY = Datas[split:,0,0]
 
 	# Construction du réseau keras:
 from keras import Sequential
-from keras.layers import LSTM, Dense
+from keras.layers import LSTM, Dense, Dropout
 from keras.optimizers import RMSprop
 np.random.seed(10)
 
 debut = time()
 NET = Sequential()
-NET.add(LSTM(1, activation='relu', input_shape=(taille_sequence,dimension)))
-# NET.add(LSTM(5,activation='relu'))
-NET.compile(loss='mse',optimizer=RMSprop(lr=0.01))
+NET.add(LSTM(50, activation='relu', input_shape=(taille_sequence,dimension),return_sequences=True))
+NET.add(Dropout(0.2))
+NET.add(LSTM(100,activation='relu',return_sequences=False))
+NET.add(Dropout(0.2))
+NET.add(Dense(1,activation='linear'))
+NET.compile(loss='mse',optimizer=RMSprop(lr=0.0001,decay=0.01))
 fin = time()
 print("COMPILATION TERMINEE, Durée: "+ str(fin-debut))
 
 	# Visualisation du réseau créé:
 from keras.utils import plot_model
-# plot_model(NET,'model.png')
+plot_model(NET,'model.png',show_shapes=True)
 
 	# Apprentissage du réseau:
 debut = time()
-NET.fit(trainX,trainY,epochs=1000,validation_split=0.6)
+NET.fit(trainX,trainY,epochs=1000,validation_split=0.05)
 fin = time()
 print("APPRENTISSAGE TERMINE, Durée: "+ str(fin-debut))
+NET.save('lstm_model.h5')
 
 	# Prédiction:
 Predict = NET.predict(trainX)
-# for i in range(100):
-# 	Predict.append(NET.predict(Predict[-1]))
 
 	# Dénormanisaton des prédictions:
 for i in range(len(Predict)):
@@ -84,28 +86,4 @@ for i in range(len(Predict)):
 trainOpen = Open[:split-1]
 Predictgraph = graphique(titre='Valeur, à l\'ouverture, de l\'action Apple',x=range(len(trainOpen)),y=trainOpen,legende='Valeur réelle')
 Predictgraph.courbe(x=range(len(Predict)),y=Predict,legende='Valeur prédite')
-
-"""COMPARAISON AVEC L'ANCIEN MODELE:"""
-
-# NET = ExtremeANN(5,50,5)
-# NET.apprentissage(10000,0.001,trainX,trainY)
-# Trainp = NET.propagation(trainX)[:,0]
-# Testp = NET.propagation(testX)
-# for i in range(200):
-# 	Testp = np.vstack((Testp,NET.propagation(Testp[-1:])))
-# Testp = Testp[:,0]
-
-	# Dénormanisaton des prédictions:
-# for i in range(len(Trainp)):
-# 	Trainp[i] = MMdenorm(Trainp[i],min(Open),max(Open))
-# for i in range(len(Testp)):
-# 	Testp[i] = MMdenorm(Testp[i],min(Open),max(Open))
-
-	# Affichage des graphiques:
-# Traingraph2 = graphique(titre='Données d\'entraînement 2',x=range(len(trainOpen)),y=trainOpen,legende='Valeur réelle')
-# Traingraph2.courbe(x=range(len(Trainp)),y=Trainp,legende='Valeur prédite')
-
-# Testgraph2 = graphique(titre='Données de test 2',x=range(len(testOpen)),y=testOpen,legende='Valeur réelle')
-# Testgraph2.courbe(x=range(len(Testp)),y=Testp,legende='Valeur prédite')
-
 plt.show()
