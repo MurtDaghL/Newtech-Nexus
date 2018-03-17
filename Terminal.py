@@ -1,4 +1,4 @@
-from ANN import *
+from ANN import MMnorm, MMdenorm
 from GRAPH import *
 import matplotlib
 import matplotlib.pyplot as plt, numpy as np
@@ -33,19 +33,13 @@ while i < len(Open):
 	
 fin = time()
 Datas = np.array(Datas)
-print("EXTRACTION ET NORMALISATION TERMINEE, durée: {temps}\nDimensions du tenseur de données: {dim} ".format(temps=fin-debut,dim=Datas.shape))
-
-	# Séparation des données d'entraînement et de test (obsolète puisque directement implémentable dans le réseau):
-ratio = 1
-split = int(ratio*len(Datas))
-trainX = Datas[:split-1] #Entrée donnée au réseau, correspond à une séquence de 5 jours
-trainY = Datas[1:split,0,0] #Prédiction attendue, correspond à la valeur Open du jour suivant la séquence
-testX = Datas[split-1:-1]
-testY = Datas[split:,0,0]
-
+print("EXTRACTION ET NORMALISATION TERMINEE, durée: {temps}\nDimensions du tenseur de données: {dim}".format(temps=fin-debut,dim=Datas.shape))
 
 
 """CREATION ET UTILISATION DU RESEAU NEURONAL:"""
+
+Input = Datas[:-1] #Entrée donnée au réseau, correspond à une séquence de 5 jours
+Attendu = Datas[1:] #Prédiction attendue, la séquence de 5 jours suivante
 
 	# Construction du réseau keras:
 from keras import Sequential
@@ -57,10 +51,10 @@ debut = time()
 NET = Sequential()
 NET.add(LSTM(50, activation='relu', input_shape=(taille_sequence,dimension),return_sequences=True))
 NET.add(Dropout(0.2))
-NET.add(LSTM(100,activation='relu',return_sequences=False))
+NET.add(LSTM(100,activation='relu',return_sequences=True))
 NET.add(Dropout(0.2))
-NET.add(Dense(1,activation='linear'))
-NET.compile(loss='mse',optimizer=RMSprop(lr=0.0001,decay=0.01))
+NET.add(LSTM(5,activation='linear',return_sequences=True))
+NET.compile(loss='mse',optimizer=RMSprop(lr=0.001,decay=0.0001))
 fin = time()
 print("COMPILATION TERMINEE, Durée: "+ str(fin-debut))
 
@@ -70,20 +64,31 @@ plot_model(NET,'model.png',show_shapes=True)
 
 	# Apprentissage du réseau:
 debut = time()
-NET.fit(trainX,trainY,epochs=1000,validation_split=0.05)
+NET.fit(Input,Attendu,epochs=100,validation_split=0.05)
 fin = time()
 print("APPRENTISSAGE TERMINE, Durée: "+ str(fin-debut))
 NET.save('lstm_model.h5')
 
 	# Prédiction:
-Predict = NET.predict(trainX)
+Predict = NET.predict(Input[:-155])
+for i in range(20):
+	Predict = np.vstack((Predict,NET.predict(Predict[-1].reshape((1,taille_sequence,dimension)))))
+
+	# Transformation de la liste de séquences en une unique séquence et supression des doublons:
+Predict = list(Predict.reshape((len(Predict)*taille_sequence,dimension))[:,0])
+
+New_Predict = []
+for i in range(len(Predict)):
+	if i % taille_sequence == 0:
+		New_Predict.append(Predict[i])
+Predict = New_Predict
+del New_Predict
 
 	# Dénormanisaton des prédictions:
 for i in range(len(Predict)):
 	Predict[i] = MMdenorm(Predict[i],min(Open),max(Open))
 
 	# Affichage des graphiques:
-trainOpen = Open[:split-1]
-Predictgraph = graphique(titre='Valeur, à l\'ouverture, de l\'action Apple',x=range(len(trainOpen)),y=trainOpen,legende='Valeur réelle')
+Predictgraph = graphique(titre='Valeur, à l\'ouverture, de l\'action Apple',x=range(len(Open)),y=Open,legende='Valeur réelle')
 Predictgraph.courbe(x=range(len(Predict)),y=Predict,legende='Valeur prédite')
 plt.show()
