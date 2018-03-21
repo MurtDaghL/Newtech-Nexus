@@ -7,7 +7,7 @@ from time import sleep, time
 """IMPORTATION ET TRAITEMENT DES DONNEES:"""
 
 	# Extraction et inversion des données:
-Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\GitHub\\Newtech-Nexus\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
+Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\GitHub\\Newtech-Nexus\\Datas\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
 Open,High,Low,Close,Volume = Open[::-1],High[::-1],Low[::-1],Close[::-1],Volume[::-1]
 
 	# Normalisation et regroupement des données en séquences de 5 jours:
@@ -60,7 +60,7 @@ print("COMPILATION TERMINEE, Durée: "+ str(fin-debut))
 
 	# Visualisation du réseau créé:
 from keras.utils import plot_model
-plot_model(NET,'model.png',show_shapes=True)
+plot_model(NET,'D:\\Domanis\\GitHub\\Newtech-Nexus\\Saves\\model.png',show_shapes=True)
 
 	# Apprentissage du réseau:
 debut = time()

@@ -1,0 +1,11 @@
+I) Préparation des données:
+https://machinelearningmastery.com/how-to-prepare-data-for-machine-learning/
+    A/ Sélectionner les données
+    B/ 'Preprocess' les données
+    C/ Transformer les données
+
+II) Choix du modèle et apprentissage:
+
+III) Réglage des hyperparamètres
+
+IV) Prédiction

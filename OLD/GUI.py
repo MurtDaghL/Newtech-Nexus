@@ -38,7 +38,7 @@ def _valider():
 		valider['state'] = 'disabled'
 		animation['state'] = 'disabled'
 		intervalle['state'] = 'disabled'
-		with open("D:\\Domanis\\GitHub\\Newtech-Nexus\\RESEAU.py","r") as script:
+		with open("D:\\Domanis\\GitHub\\Newtech-Nexus\\OLD\\RESEAU.py","r") as script:
 			exec(script.read())
 def _quit():
 	fenetre.quit()

@@ -6,7 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 # Extraction et inversion des données:
-Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\GitHub\\Newtech-Nexus\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
+Open,High,Low,Close,Volume = np.loadtxt('D:\\Domanis\\GitHub\\Newtech-Nexus\\Datas\\aapl.csv', delimiter=',', skiprows=1, usecols=(1,2,3,4,5),unpack=True)
 Open,High,Low,Close,Volume = Open[::-1],High[::-1],Low[::-1],Close[::-1],Volume[::-1]
 # Création des graphiques matplotlib:
 from GRAPH import *
@@ -42,11 +42,11 @@ Input = Attendu
 del Input[len(Input)-1]
 
 # Affichage de la fenêtre tkinter
-with open("D:\\Domanis\\GitHub\\Newtech-Nexus\\GUI.py","r") as script:
+with open("D:\\Domanis\\GitHub\\Newtech-Nexus\\OLD\\GUI.py","r") as script:
 		exec(script.read())
 
 # Affiche performance optimale:
-N,E,T,Err_moy = np.loadtxt("D:\\Domanis\\GitHub\\Newtech-Nexus\\Historique.csv", delimiter = ',', skiprows=1 , usecols=(0,1,2,4),unpack=True)
+N,E,T,Err_moy = np.loadtxt("D:\\Domanis\\GitHub\\Newtech-Nexus\\Saves\\Historique.csv", delimiter = ',', skiprows=1 , usecols=(0,1,2,4),unpack=True)
 index = list(Err_moy).index(min(Err_moy))
 
 afficher('D\'après l\'historique, voici les paramètres optimaux:')
